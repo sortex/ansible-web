@@ -1,0 +1,25 @@
+---
+
+- name: Ensure php
+  pacman: name=php
+  tags: packages
+
+- name: Configure php
+  template: src=php.ini.j2
+            dest=/etc/php/php.ini
+            owner=root group=root
+  notify: reload webserver
+  tags: config
+
+- name: Ensure php libraries
+  pacman: name={{ item }}
+  with_items:
+    - php-apache
+    - php-gd
+    - php-geoip
+    - php-mcrypt
+    - php-pgsql
+    - php-pear
+    - php-tidy
+    - php-intl
+  notify: reload webserver

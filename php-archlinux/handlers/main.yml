@@ -1,0 +1,5 @@
+---
+
+- name: reload webserver
+  debug: msg="Reloading {{ webserver }}..."
+  notify: "restart {{ webserver }}"

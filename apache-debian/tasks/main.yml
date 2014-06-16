@@ -1,0 +1,26 @@
+---
+
+- name: Ensuring Apache web-server
+  pacman: name=apache
+  notify: restart apache
+  tags: packages
+
+- name: Configure Apache
+  template: src=apache2.conf.j2
+            dest=/etc/apache2/apache2.conf
+            owner=root group=root
+  notify: restart apache
+  tags: config
+
+- name: Configure Apache
+  template: src=ports.conf.j2
+            dest=/etc/apache2/ports.conf
+            owner=root group=root
+  notify: restart apache
+  tags: config
+
+- name: Enable Apache modules
+  apache2_module: state=present name={{ item }}
+  with_items: apache.modules
+  notify: restart apache
+  tags: config

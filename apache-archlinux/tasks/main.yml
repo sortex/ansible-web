@@ -1,0 +1,25 @@
+---
+
+- name: Ensuring Apache web-server
+  pacman: name=apache
+  notify: restart apache
+  tags: 
+    - apache
+    - packages
+
+- name: Configure Apache
+  template: src=httpd.conf.j2
+            dest=/etc/httpd/conf/httpd.conf
+            owner=root group=root
+  notify: restart apache
+  tags: 
+    - apache
+    - config
+
+- name: Ensure Apache vhost directory
+  file: path=/etc/httpd/vhosts state=directory 
+        owner=root group=root
+  notify: restart apache
+  tags: 
+    - apache
+    - config
