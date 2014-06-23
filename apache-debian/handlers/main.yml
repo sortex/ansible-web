@@ -1,4 +1,4 @@
 ---
 
 - name: restart apache
-  service: name=httpd.service state=restarted enabled=yes
+  service: name=apache2 state=restarted enabled=yes
