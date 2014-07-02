@@ -18,8 +18,19 @@
     - php-gd
     - php-geoip
     - php-mcrypt
+    - php-memcache
     - php-pgsql
     - php-pear
     - php-tidy
     - php-intl
   notify: reload webserver
+
+- name: Enable memcached extension
+  lineinfile: dest=/etc/php/conf.d/memcache.ini
+              regexp='^;extension'
+              line='extension=memcache.so'
+  notify: reload webserver
+  tags:
+    - php
+    - memcached
+    - config
